@@ -83,7 +83,7 @@ defineFunction(main, void)
 				}
 			}
 		}
-		if(orphanages_capacity ? 0 | orphans > orphanages_capacity & EVENT_PROB > 0)
+		if((orphanages_capacity ? 0 | orphans > orphanages_capacity - 1) & EVENT_PROB > 0)
 		{
 			Random(rnd);
 			rnd = rnd % 10000;
