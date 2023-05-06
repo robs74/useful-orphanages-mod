@@ -1,0 +1,26 @@
+defineVariable(int, ORPHANAGE_AGE_FACTOR);
+defineVariable(float, ORPHANAGE_MAX_AGE);
+defineVariable(float, ORPHANAGE_OVERCROWDING_FACTOR);
+defineVariable(float, ORPHANAGE_MIN_HAPPINESS);
+defineVariable(float, ORPHANAGE_MAX_CRIME);
+defineVariable(int, EVENT_PROB);
+defineVariable(float, EVENT_HAPPINESS_PENALTY);
+defineVariable(float, EVENT_LOYALTY_PENALTY);
+
+defineFunction(InitSettings, void)
+{
+	//you can modify the following values to enable or disable features or change the balance, making the game harder or easier
+	//please keep at least one digit after the decimal point if present
+	
+	ORPHANAGE_AGE_FACTOR = 1; //every time an orphan's age is divisible by this, they get one year older, effectively speeding up their ageing (set to 1 or less to disable this feature)
+	ORPHANAGE_MAX_AGE = 21.0; //the age until orphans are allowed to stay in the orphanage, when they reach this age, their age is set to 21 and they leave the orphanage, set to 21.0 or more to disable this feature
+	ORPHANAGE_OVERCROWDING_FACTOR = 1.0; //an orphanage is considered overcrowded if the number of children exceeds ORPHANAGE_OVERCROWDING_FACTOR times its current capacity
+	ORPHANAGE_MIN_HAPPINESS = 0.5; //orphans won't be less happy than this unless their orphanage is overcrowded
+	ORPHANAGE_MAX_CRIME = 0.05; //orphans won't have more criminality than this unless their orphanage is overcrowded
+	
+	EVENT_PROB = 30; //the probability of the negative event when the orphanages are overcrowded per check (about 6 times a day) is this over 10,000, set to 0 or less to disable this feature
+	EVENT_HAPPINESS_PENALTY = 0.1; //the event lowers the happiness of each worker by this
+	EVENT_LOYALTY_PENALTY = 0.1; //the event lowers the loyalty of each worker by this
+	
+	returnVoid();
+}
