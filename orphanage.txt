@@ -60,7 +60,7 @@ defineFunction(main, void)
 					{	
 						Person_SetAge(k, person.fAge + 1.0);
 					}
-					if(ORPHANAGE_MAX_AGE < 21.0 & person.fAge > ORPHANAGE_MAX_AGE)
+					if(ORPHANAGE_MAX_AGE < 21.0 & person.fAge > ORPHANAGE_MAX_AGE & person.fAge < 21.0)
 					{	
 						Person_SetAge(k, 21.0);
 						orphans = orphans - 1;
