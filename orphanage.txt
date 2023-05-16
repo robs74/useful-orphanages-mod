@@ -6,6 +6,7 @@ defineVariable(int, n);
 defineVariable(int, i);
 defineVariable(int, j);
 defineVariable(int, k);
+defineVariable(int, population);
 defineVariable(Building, building);
 defineVariable(Person, person);
 defineVariable(Resources, resources);
@@ -15,6 +16,8 @@ defineVariable(int, age);
 defineVariable(float, min_loyalty);
 defineVariable(vec3, vector);
 defineVariable(int, rnd);
+defineVariable(int, expanded_orphanages);
+defineVariable(char, overcrowded);
 
 defineFunction(main, void)
 {
@@ -33,9 +36,15 @@ defineFunction(main, void)
 		Building_GetNumberOfBuildings(n);
 		orphanages_capacity = 0;
 		orphans = 0;
+		overcrowded = 1;
+		population = 0;
  		for (i=0, i<n, i=i+1)
 		{
 			building.GetDataByIndex(i);
+			if(building.nType ? BUILDINGTYPE_LIVING)
+			{
+				population = population + building.nWorkersNum;
+			}
   			if(building.nType ? BUILDINGTYPE_ORPHANAGE)
 			{
 				resources.GetFromBuilding(i);
@@ -67,6 +76,7 @@ defineFunction(main, void)
 					}
 					if(building.nWorkersSecondaryNum < ORPHANAGE_OVERCROWDING_FACTOR * building.fCurrentProduction & resources.food > 0.0 & resources.clothes > 0.0 & resources.meat > 0.0)
 					{
+						overcrowded = 0;
 						if(person.fStatusHappiness < ORPHANAGE_MIN_HAPPINESS)
 						{
 							Person_SetStatus(k, 0, ORPHANAGE_MIN_HAPPINESS);
@@ -83,7 +93,11 @@ defineFunction(main, void)
 				}
 			}
 		}
-		if((orphanages_capacity ? 0 | orphans > orphanages_capacity - 1) & EVENT_PROB > 0)
+		if(orphanages_capacity > orphans + 5)
+		{
+			expanded_orphanages = 1;
+		}
+		if((orphanages_capacity ? 0 | overcrowded ? 1) & EVENT_PROB > 0 & population > MIN_POPULATION_FOR_EVENT)
 		{
 			Random(rnd);
 			rnd = rnd % 10000;
@@ -103,11 +117,12 @@ defineFunction(main, void)
 						{
 							Building_Workers_GetID(i, j, k);
 							person.GetDataByIndex(k);
-							Person_SetStatus(k, 0, Clamp(person.fStatusHappiness - EVENT_HAPPINESS_PENALTY, 0.0, 1.0));
-							Person_SetStatus(k, 3, Clamp(person.fStatusSoviet - EVENT_LOYALTY_PENALTY, 0.0, 1.0));
+							Person_SetStatus(k, 0, Clamp(person.fStatusHappiness - EVENT_HAPPINESS_PENALTY / (2 ^ expanded_orphanages), 0.0, 1.0));
+							Person_SetStatus(k, 3, Clamp(person.fStatusSoviet - EVENT_LOYALTY_PENALTY / (2 ^ expanded_orphanages), 0.0, 1.0));
 						}
 					}
 				}
+				expanded_orphanages = 0;
 			}
 		}
 		Script_LeaveCriticalSection();

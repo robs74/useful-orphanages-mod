@@ -8,6 +8,5 @@ defineFunction(main, void)
 	{
 		Script_DestroyByName("orphanage.txt");
 	}
-	Objectives_ClearAll();
 	end();
 }
