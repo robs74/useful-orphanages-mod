@@ -41,11 +41,11 @@ defineFunction(main, void)
  		for (i=0, i<n, i=i+1)
 		{
 			building.GetDataByIndex(i);
-			if(building.nType ? BUILDINGTYPE_LIVING)
+			if(building.nType ? BUILDINGTYPE_LIVING & building.fPercFinished ? 1.0)
 			{
 				population = population + building.nWorkersNum;
 			}
-  			if(building.nType ? BUILDINGTYPE_ORPHANAGE)
+  			if(building.nType ? BUILDINGTYPE_ORPHANAGE & building.fPercFinished ? 1.0)
 			{
 				resources.GetFromBuilding(i);
 				orphanages_capacity = orphanages_capacity + building.fCurrentProduction;
