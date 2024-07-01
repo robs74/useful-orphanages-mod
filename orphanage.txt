@@ -21,6 +21,8 @@ defineVariable(char, overcrowded);
 defineVariable(float, game_time);
 defineVariable(float, game_time_prev);
 
+defineVariable(int, is_active);
+
 defineFunction(main, void)
 {
 	InitConstants();
@@ -48,7 +50,8 @@ defineFunction(main, void)
 			for (i=0, i<n, i=i+1)
 			{
 				building.GetDataByIndex(i);
-				if(building.nType ? BUILDINGTYPE_LIVING & building.fPercFinished > 0.9999)
+				Building_IsOldTownActive(i, is_active);
+				if(building.nType ? BUILDINGTYPE_LIVING & building.fPercFinished > 0.9999 & is_active * is_active ? 1)
 				{
 					population = population + building.nWorkersNum;
 				}
