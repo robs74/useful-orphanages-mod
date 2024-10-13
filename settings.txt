@@ -20,8 +20,8 @@ defineFunction(InitSettings, void)
 	ORPHANAGE_MAX_CRIME = 0.05; //orphans won't have more criminality than this unless their orphanage is overcrowded
 	
 	EVENT_PROB = 30; //the probability of the negative event when the orphanages are overcrowded per check (about 6 times a day) is this over 10,000, set to 0 or less to disable this feature
-	EVENT_HAPPINESS_PENALTY = 0.1; //the event lowers the happiness of each worker by this
-	EVENT_LOYALTY_PENALTY = 0.1; //the event lowers the loyalty of each worker by this
+	EVENT_HAPPINESS_PENALTY = 0.02; //the event lowers the happiness of each worker by this
+	EVENT_LOYALTY_PENALTY = 0.02; //the event lowers the loyalty of each worker by this
 	MIN_POPULATION_FOR_EVENT = 1000; //the event won't happen if your population is less than or equal to this
 	
 	returnVoid();
